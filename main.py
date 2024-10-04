@@ -31,3 +31,5 @@ conn.commit()
 # Close the connection
 cursor.close()
 conn.close()
+
+#added for testing
