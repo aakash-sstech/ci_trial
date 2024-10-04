@@ -24,7 +24,7 @@ jobs:
       - name: Merge changes into release branch (accept incoming changes)
         run: |
           git checkout release
-          git merge -X theirs main --no-edit
+          git merge main --no-edit --allow-unrelated-histories -X theirs
 
       - name: Push changes to release branch
         run: git push origin release
