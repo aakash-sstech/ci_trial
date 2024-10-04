@@ -1,0 +1,32 @@
+name: Sync Release Branch
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync_release_branch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Git for pushing changes
+        run: |
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+
+      - name: Fetch all branches
+        run: git fetch --all
+
+      - name: Merge changes into release branch (accept incoming changes)
+        run: |
+          git checkout release
+          git merge -X theirs main --no-edit
+
+      - name: Push changes to release branch
+        run: git push origin release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
